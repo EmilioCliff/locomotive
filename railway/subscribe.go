@@ -201,10 +201,10 @@ func (g *GraphQLClient) SubscribeToLogs(ctx context.Context, logTrack chan<- []E
 			}
 
 			// skip container logs, container logs don't have deployment instance ids
-			if logs.Payload.Data.EnvironmentLogs[i].Tags.DeploymentInstanceID == "" {
-				logger.Stdout.Debug("skipping container log message")
-				continue
-			}
+			// if logs.Payload.Data.EnvironmentLogs[i].Tags.DeploymentInstanceID == "" {
+			// 	logger.Stdout.Debug("skipping container log message")
+			// 	continue
+			// }
 
 			// on first subscription skip logs if they where logged before the first subscription, on resubscription skip logs if they where already processed
 			if logs.Payload.Data.EnvironmentLogs[i].Timestamp.Before(LogTime) || LogTime == logs.Payload.Data.EnvironmentLogs[i].Timestamp {
