@@ -85,7 +85,7 @@ func (g *GraphQLClient) createSubscription(ctx context.Context, cfg *config.Conf
 		Query: streamEnvironmentLogsQuery,
 		Variables: &variables{
 			EnvironmentId: cfg.EnvironmentId,
-			Filter:        buildServiceFilter(cfg.Train),
+			// Filter:        buildServiceFilter(cfg.Train),
 
 			// needed for seamless subscription resuming
 			BeforeDate:  time.Now().UTC().Add(-5 * time.Minute).Format(time.RFC3339Nano),
@@ -208,7 +208,7 @@ func (g *GraphQLClient) SubscribeToLogs(ctx context.Context, logTrack chan<- []E
 
 			// on first subscription skip logs if they where logged before the first subscription, on resubscription skip logs if they where already processed
 			if logs.Payload.Data.EnvironmentLogs[i].Timestamp.Before(LogTime) || LogTime == logs.Payload.Data.EnvironmentLogs[i].Timestamp {
-				// logger.Stdout.Debug("skipping stale log message")
+				logger.Stdout.Debug("skipping stale log message")
 				continue
 			}
 

@@ -1,0 +1,28 @@
+httpLogs: 
+query ($deploymentId: String!) {
+  httpLogs(deploymentId: $deploymentId) {
+    clientUa
+    deploymentId
+    deploymentInstanceId
+    downstreamProto
+    edgeRegion
+    host
+    httpStatus
+    method
+    path
+    requestId
+    responseDetails
+    rxBytes
+    srcIp
+    timestamp
+    totalDuration
+    txBytes
+    upstreamAddress
+    upstreamProto
+    upstreamRqDuration
+  }
+}
+
+{
+  "deploymentId": "5003305a-465f-42ae-8b8e-5a7d3cc683dc"
+}
