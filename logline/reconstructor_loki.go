@@ -3,6 +3,7 @@ package logline
 import (
 	"fmt"
 	"strconv"
+	"strings"
 
 	"github.com/buger/jsonparser"
 	"github.com/ferretcode/locomotive/railway"
@@ -37,6 +38,7 @@ func ReconstructLogLineLoki(log railway.EnvironmentLog) (jsonObject []byte, err 
 	jsonObject = []byte("{\"stream\":{},\"values\":[[0,1,{}]]}")
 
 	labels := map[string]string{
+		"exporter": 			  "locomotive",
 		"project_id":             log.Tags.ProjectID,
 		"project_name":           log.Tags.ProjectName,
 		"environment_id":         log.Tags.EnvironmentID,
@@ -77,7 +79,7 @@ func ReconstructLogLineLoki(log railway.EnvironmentLog) (jsonObject []byte, err 
 		return nil, fmt.Errorf("failed to append severity attribute to object: %w", err)
 	}
 
-	jsonObject, err = jsonparser.Set(jsonObject, []byte(strconv.Quote(log.Severity)), "stream", "level")
+	jsonObject, err = jsonparser.Set(jsonObject, []byte(strconv.Quote(strings.ToUpper(log.Severity))), "stream", "level")
 	if err != nil {
 		return nil, fmt.Errorf("failed to append severity attribute to object: %w", err)
 	}

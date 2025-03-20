@@ -12,7 +12,6 @@ import (
 
 	"github.com/ferretcode/locomotive/config"
 	"github.com/ferretcode/locomotive/logger"
-	"github.com/ferretcode/locomotive/util"
 	"github.com/google/uuid"
 	"nhooyr.io/websocket"
 )
@@ -213,16 +212,16 @@ func (g *GraphQLClient) SubscribeToLogs(ctx context.Context, logTrack chan<- []E
 			}
 
 			// skip logs that don't match our desired global filter(s)
-			if !util.IsWantedLevel(cfg.LogsFilterGlobal, logs.Payload.Data.EnvironmentLogs[i].Severity) {
-				logger.Stdout.Debug("skipping undesired global log level", slog.String("level", logs.Payload.Data.EnvironmentLogs[i].Severity), slog.Any("wanted", cfg.LogsFilterGlobal))
-				continue
-			}
+			// if !util.IsWantedLevel(cfg.LogsFilterGlobal, logs.Payload.Data.EnvironmentLogs[i].Severity) {
+			// 	logger.Stdout.Debug("skipping undesired global log level", slog.String("level", logs.Payload.Data.EnvironmentLogs[i].Severity), slog.Any("wanted", cfg.LogsFilterGlobal))
+			// 	continue
+			// }
 
 			// skip logs that don't match our desired global content filter(s)
-			if !util.MatchesContentFilter(cfg.LogsContentFilterGlobal, logs.Payload.Data.EnvironmentLogs[i].Message) {
-				logger.Stdout.Debug("skipping undesired global log content", slog.String("content", logs.Payload.Data.EnvironmentLogs[i].Message), slog.String("filter", cfg.LogsContentFilterGlobal))
-				continue
-			}
+			// if !util.MatchesContentFilter(cfg.LogsContentFilterGlobal, logs.Payload.Data.EnvironmentLogs[i].Message) {
+			// 	logger.Stdout.Debug("skipping undesired global log content", slog.String("content", logs.Payload.Data.EnvironmentLogs[i].Message), slog.String("filter", cfg.LogsContentFilterGlobal))
+			// 	continue
+			// }
 
 			LogTime = logs.Payload.Data.EnvironmentLogs[i].Timestamp
 
